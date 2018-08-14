@@ -1,19 +1,13 @@
-# -*- coding: cp1252 -*-
-def anadir(cola):
-    codigo = raw_input('ingrese el codigo de la persona')
-    nombre = raw_input('ingrese el nombre de la persona')
-    placa = raw_input('ingrese la placa del vehiculo')
-    cola.encolar(Persona(codigo, nombre, placa))
 # -*- coding: utf-8 -*-
 class Cola:
     """ Representa una cola con operaciones de encolar, desencolar y
-        verificar si est· vacÌa. """
+        verificar si est√° vac√≠a. """
  
     def __init__(self):
-        """ Crea una cola vacÌa. """
-        # La cola vacÌa se representa con una lista vacÌa
+        """ Crea una cola vac√≠a. """
+        # La cola vac√≠a se representa con una lista vac√≠a
         self.items=[]
-        self.limiteEspacios = 30        
+        self.limiteEspacios = 30
 
     def encolar(self, x):
         """ Agrega el elemento x a la cola. """
@@ -21,28 +15,24 @@ class Cola:
         if self.limiteEspacios > 1:
             self.items.append(x)
             self.limiteEspacios-=1
-            print('Espacios disponibles = '+ str(self.limiteEspacios))
-        else :
-            raise ValueError("El Parqueadero esta lleno")
 
     def desencolar(self):
         """ Devuelve el elemento inicial y lo elimina de la cola.
-            Si la cola est· vacÌa levanta una excepciÛn. """
+            Si la cola est√° vac√≠a levanta una excepci√≥n. """
         try:
             if self.limiteEspacios<30:
                 self.limiteEspacios+=1
-                print('Sale '+self.items[0].getNombre()+', quedan '+str(self.limiteEspacios)+' espacios')
             return self.items.pop(0)
         except IndexError:
             raise ValueError("El parqueadero esta vacio")
 
     def es_vacia(self):
-        """ Devuelve True si la lista est· vacÌa, False si no. """
+        """ Devuelve True si la lista est√° vac√≠a, False si no. """
         return self.items == []
 
     def mostrar(self):
         for Persona in self.items:
-            print(Persona.mostrarDatos()+'\n')
+            print('\t'+Persona.mostrarDatos())
 
 class Persona:
     """ Representa el contenedor de los datos: CodEst, Nombre y placa
@@ -50,38 +40,36 @@ class Persona:
 
     def __init__(self,x ,y ,z):
         """ Inicializador de persona """
-        self.CodEst = x
-        self.Nombre = y
-        self.Placa  = z
+        self.codigo = x
+        self.nombre = y
+        self.placa  = z
 
     def getNombre(self):
-        return self.Nombre
+        return self.nombre
 
     def getCodigo(self):
-        return self.CodEst
+        return self.codigo
 
     def getPlaca(self):
-        return self.Placa
+        return self.placa
 
     def mostrarDatos(self):
         return self.getCodigo() +' '+ self.getNombre() +' '+ self.getPlaca()
+
+# -*- coding: cp1252 -*-
+def anadir(cola):
+    codigo = input('ingrese el codigo de la persona: ')
+    nombre = input('ingrese el nombre de la persona: ')
+    placa = input('ingrese la placa del vehiculo: ')
+    cola.encolar(Persona(codigo, nombre, placa))
     
-p1 = Persona('20141020009', 'Arturo Buenaonda', 'BMX359')
-p2 = Persona('20102035359', 'persona 2', 'BMX789')
-p3 = Persona('20102035359', 'persona 3', 'BMW749')
-p4 = Persona('20102035359', 'persona 4', 'ECM721')
-p5 = Persona('20102035359', 'persona 5', 'ACM019')
-p6 = Persona('20102035359', 'persona 6', 'IBM007')
-
-p = Cola()
-p.es_vacia()
-p.encolar(p1)
-p.encolar(p5)
-p.encolar(p3)
-p.encolar(p4)
-p.encolar(p2)
-p.encolar(p6)
-p.es_vacia()
-p.mostrar()
-p.desencolar()
-
+def pedirNumeroEntero(): 
+    correcto=False
+    num=0
+    while(not correcto):
+        try:
+            num = int(input("Introduce un numero entero: "))
+            correcto=True
+        except ValueError:
+            print('Error, introduce un numero entero')
+    return num
