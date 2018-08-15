@@ -26,20 +26,27 @@ def evaluar(arbol):
     return int(arbol.valor)
     
 archivo = open("operaciones.txt","r")
-os.remove("resultado.txt")
 archivo2 = open("resultado.txt","w")
-lineas = archivo.readline()
-#for linea in lineas:
- #   pila = Pila()
-  #  exp = linea.split(" ")
-   # convertir(exp,pila)
-    #archivo2.write(str(evaluar(pila.desapilar()))+"\n")
+
+lineas = archivo.readlines()
 print(lineas)
+for linea in lineas:
+    if(len(linea)>1):
+        linea = linea[:-1]
+        pila = Pila()
+        exp = linea.split(" ")
+        print (exp)
+        convertir(exp,pila)
+        print(pila.items)
+        valor = (evaluar(pila.desapilar()))
+        archivo2.write(str(valor) + "\n")
+        print(valor)
+        
 
 ##exp = raw_input("ingrese l expresion en posfija: ").split(" ")
 
 ##pila = Pila()
 
-##convertir(exp, pila)
+archivo.close()
+archivo2.close()
 
-##print evaluar(pila.desapilar())
