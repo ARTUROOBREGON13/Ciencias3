@@ -1,52 +1,60 @@
 from pila import *
 from arbol import *
-import os
-lineas = []
 
 def convertir(lista, pila):
     if lista != []:
-        if lista[0] in "+-*/":
+        if lista[0] in "+-*=/":
             nodo_der = pila.desapilar()
             nodo_izq = pila.desapilar()
             pila.apilar(Nodo(lista[0],nodo_izq,nodo_der))
         else:
             pila.apilar(Nodo(lista[0]))
-            return convertir(lista[1:],pila)
+        return convertir(lista[1:],pila)
             
 
-def evaluar(arbol):
+def evaluar(arbol, lista):
     if arbol.valor == "+":
-        return evaluar(arbol.izq) + evaluar(arbol.der)
+        return evaluar(arbol.izq, lista) + evaluar(arbol.der, lista)
     if arbol.valor == "-":
-        return evaluar(arbol.izq) - evaluar(arbol.der)
+        return evaluar(arbol.izq, lista) - evaluar(arbol.der, lista)
     if arbol.valor == "/":
-        return evaluar(arbol.izq) / evaluar(arbol.der)
+        return evaluar(arbol.izq, lista) / evaluar(arbol.der, lista)
     if arbol.valor == "*":
-        return evaluar(arbol.izq) * evaluar(arbol.der)
+        return evaluar(arbol.izq, lista) * evaluar(arbol.der, lista)
+    if arbol.valor == "=":
+        x = evaluar(arbol.der, lista)
+        y = evaluar(arbol.izq, lista)
+        z = (x,y) 
+        return z
+    if arbol.valor.isalpha():
+        x = buscar(lista, arbol.valor)
+        if x != "":
+            return x
+        return arbol.valor
     return int(arbol.valor)
+
+def buscar(lista, var):
+    for item in lista:
+        if item[0] == var:
+            return item[1]
+    return ""
     
-archivo = open("operaciones.txt","r")
-archivo2 = open("resultado.txt","w")
+pila = Pila()
+lista = []
+archivo = open("expresionesin.txt","r")
+archivo2 = open("expresionesout.txt","w")
 
 lineas = archivo.readlines()
-print(lineas)
 for linea in lineas:
     if(len(linea)>1):
         linea = linea[:-1]
         pila = Pila()
         exp = linea.split(" ")
-        print (exp)
         convertir(exp,pila)
-        print(pila.items)
-        valor = (evaluar(pila.desapilar()))
-        archivo2.write(str(valor) + "\n")
-        print(valor)
-        
+        valor = (evaluar(pila.desapilar(),lista))
+        lista.append(valor)
 
-##exp = raw_input("ingrese l expresion en posfija: ").split(" ")
-
-##pila = Pila()
-
+for v in lista:
+    archivo2.write(v[0] + " = " + str(v[1]) + "\n")
 archivo.close()
 archivo2.close()
-
