@@ -4,8 +4,9 @@ tokens = ['START_PROGRAM', 'DEF_FUNC','FUNC','DIGIT','NUMBER', 'FOR',
           'TIMES', 'AS','NAME','GENERAL_EXPRESION', 'IDENT', 'EXECUTE',
           'END_EXECUTION', 'END_PROGRAM', 'OFF', 'LEFT','START','GET_BUZZ',
           'LEAVE_BUZZ','OUT','IF','THEN','ELSE','WHILE','DO','AND','OR',
-          'NOT']
+          'NOT','STRING','LETTER']
 
+#Expressions from Karel OMI
 t_START_PROGRAM = r'iniciar-programa'
 t_ignore = ' \n'
 t_DEF_FUNC = r'define\-nueva\-instruccion'
@@ -31,7 +32,8 @@ t_DO = r'do'
 t_AND = r'y'
 t_OR = r'o'
 t_NOT = r'no'
-
+t_STRING =r'"[a-zA-Z_][a-zA-Z0-9_]"'
+t_LETTER = r'[a-z_][A-Z]'
 
 
 def t_NUMBER(t):
